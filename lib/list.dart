@@ -1,6 +1,6 @@
 List products = [
   {
-    'id': 1,
+    'id': 0,
     'productName': 'Smart Watch',
     'productImage': 'assets/products/product-1.jpeg',
     'productPrice': '3000',
@@ -8,7 +8,7 @@ List products = [
     'isFav': false,
   },
   {
-    'id': 2,
+    'id': 1,
     'productName': 'Leather Women Bag',
     'productImage': 'assets/products/product-4.jpeg',
     'productPrice': '10000',
@@ -16,7 +16,7 @@ List products = [
     'isFav': false,
   },
   {
-    'id': 3,
+    'id': 2,
     'productName': 'Wireless Headphones',
     'productImage': 'assets/products/product-6.jpeg',
     'productPrice': '7000',
@@ -24,7 +24,7 @@ List products = [
     'isFav': false,
   },
   {
-    'id': 4,
+    'id': 3,
     'productName': 'Cap',
     'productImage': 'assets/products/product-5.jpeg',
     'productPrice': '2500',
@@ -32,7 +32,7 @@ List products = [
     'isFav': false,
   },
   {
-    'id': 5,
+    'id': 4,
     'productName': 'Girls Watch',
     'productImage': 'assets/products/product-3.jpeg',
     'productPrice': '4500',
@@ -40,7 +40,7 @@ List products = [
     'isFav': false,
   },
   {
-    'id': 6,
+    'id': 5,
     'productName': 'Boys Watch',
     'productImage': 'assets/products/product-2.jpeg',
     'productPrice': '5000',
@@ -48,7 +48,7 @@ List products = [
     'isFav': false,
   },
   {
-    'id': 7,
+    'id': 6,
     'productName': 'Women Purse',
     'productImage': 'assets/products/product-7.jpeg',
     'productPrice': '8000',
@@ -56,7 +56,7 @@ List products = [
     'isFav': false,
   },
   {
-    'id': 8,
+    'id': 7,
     'productName': 'Shoes',
     'productImage': 'assets/products/shoes.png',
     'productPrice': '20000',

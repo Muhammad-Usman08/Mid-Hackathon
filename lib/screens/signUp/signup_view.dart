@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/component/buttons/mybutton.dart';
 import 'package:myapp/component/loginfield/loginfield.dart';
+import 'package:myapp/screens/home/home.dart';
 import 'package:myapp/screens/login/login_view.dart';
 
 // ignore: must_be_immutable
@@ -10,6 +12,27 @@ class SignUp extends StatelessWidget {
   //controllers
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  signUp(context) async {
+    try {
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      print(credential);
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: ((context) => const HomeScreen())));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +62,12 @@ class SignUp extends StatelessWidget {
               Center(
                 child: Container(
                     margin: const EdgeInsets.only(top: 15, bottom: 15),
-                    child: const MyButton(
+                    child: MyButton(
                       buttonText: 'Create Account',
                       value: 10,
+                      onpressed: () {
+                        signUp(context);
+                      },
                     )),
               ),
               Center(

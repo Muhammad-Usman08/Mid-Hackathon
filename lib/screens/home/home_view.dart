@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/component/container/container.dart';
 import 'package:myapp/list.dart';
+import 'package:myapp/screens/cart/cart_view.dart';
 import 'package:myapp/screens/home/widget/categories.dart';
 import 'package:myapp/screens/home/widget/heading.dart';
+import 'package:myapp/screens/popular/popular_product.dart';
 import 'package:myapp/screens/product/product_detail.dart';
 
 class HomeView extends StatefulWidget {
@@ -15,23 +17,20 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   String selectedCategory = "All";
 
-  addFavItems(product) async {
-    int productIndex = products.indexWhere((p) => p['id'] == product['id']);
-    if (products[productIndex]['isFav'] == true) {
-      await Future.delayed(Duration(milliseconds: 100));
+  addFavItems(index) async {
+    if (index != -1) {
       setState(() {
-        products[productIndex]['isFav'] = false;
-        Faviourite.removeWhere((item) =>
-            item['productImage'] == products[productIndex]['productImage']);
-      });
-    } else {
-      setState(() {
-        products[productIndex]['isFav'] = true;
-        Faviourite.add({
-          'productImage': '${products[productIndex]['productImage']}',
-          'productPrice': '${products[productIndex]['productPrice']}',
-          'productName': '${products[productIndex]['productName']}',
-        });
+        products[index]['isFav'] = !products[index]['isFav'];
+        if (products[index]['isFav']) {
+          Faviourite.add({
+            'productImage': products[index]['productImage'],
+            'productPrice': products[index]['productPrice'],
+            'productName': products[index]['productName'],
+          });
+        } else {
+          Faviourite.removeWhere((item) =>
+              item['productImage'] == products[index]['productImage']);
+        }
       });
     }
   }
@@ -40,9 +39,9 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     List filteredProducts = selectedCategory == "All"
         ? products
-        : products.where((product) {
-            return product['category'] == selectedCategory;
-          }).toList();
+        : products
+            .where((product) => product['category'] == selectedCategory)
+            .toList();
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
@@ -70,12 +69,18 @@ class _HomeViewState extends State<HomeView> {
             ListTile(
               leading: const Icon(Icons.favorite),
               title: const Text('Favourite'),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PopularProduct()));
+              },
             ),
             ListTile(
               leading: const Icon(Icons.shopping_cart),
               title: const Text('Cart'),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CartScreen()));
+              },
             ),
           ],
         ),
@@ -219,7 +224,7 @@ class _HomeViewState extends State<HomeView> {
                           children: [
                             IconButton(
                               onPressed: () {
-                                addFavItems(filteredProducts[index]);
+                                addFavItems(index);
                               },
                               icon: Icon(
                                 Icons.favorite,

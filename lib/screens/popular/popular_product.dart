@@ -9,27 +9,6 @@ class PopularProduct extends StatefulWidget {
 }
 
 class _PopularProductState extends State<PopularProduct> {
-  addFavItems(index) async {
-    if (products[index]['isFav'] == true) {
-      await Future.delayed(const Duration(milliseconds: 100));
-      setState(() {
-        products[index]['isFav'] = false;
-        Faviourite.removeWhere(
-            (item) => item['productImage'] == products[index]['productImage']);
-      });
-    } else {
-      setState(() {
-        products[index]['isFav'] = true;
-        Faviourite.add({
-          'productImage': '${products[index]['productImage']}',
-          'productPrice': '${products[index]['productPrice']}',
-          'productName': '${products[index]['1stline']}',
-          'productDescription': '${products[index]['2ndline']}',
-        });
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,13 +30,13 @@ class _PopularProductState extends State<PopularProduct> {
               crossAxisCount: 2,
               mainAxisSpacing: 15,
               crossAxisSpacing: 15,
-              childAspectRatio: MediaQuery.sizeOf(context).aspectRatio * 1.1,
+              childAspectRatio: MediaQuery.sizeOf(context).aspectRatio * 1.2,
             ),
             itemCount: Faviourite.isEmpty ? 1 : Faviourite.length,
             itemBuilder: (context, index) {
               if (Faviourite.isEmpty) {
                 return Container(
-                  child: Center(
+                  child: const Center(
                     child: Text('no Faviourite Items'),
                   ),
                 );
@@ -73,17 +52,6 @@ class _PopularProductState extends State<PopularProduct> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          addFavItems(index);
-                        },
-                        icon: Icon(
-                          Icons.favorite,
-                          color: products[index]['isFav'] == true
-                              ? Colors.red
-                              : Colors.grey,
-                        ),
-                      ),
                       Padding(
                         padding: const EdgeInsets.all(13),
                         child: ClipRRect(
@@ -97,7 +65,7 @@ class _PopularProductState extends State<PopularProduct> {
                             height: 120,
                             width: double.infinity,
                             child: Image.asset(
-                              '${products[index]['productImage']}',
+                              '${Faviourite[index]['productImage']}',
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -106,7 +74,7 @@ class _PopularProductState extends State<PopularProduct> {
                       Padding(
                         padding: const EdgeInsets.only(left: 13, top: 5),
                         child: Text(
-                          '${products[index]['productName']}',
+                          '${Faviourite[index]['productName']}',
                           style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
@@ -131,7 +99,7 @@ class _PopularProductState extends State<PopularProduct> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 13, vertical: 10),
                         child: Text(
-                          ' Rs.${products[index]['productPrice']}',
+                          ' Rs.${Faviourite[index]['productPrice']}',
                           style: const TextStyle(
                               color: Color(0xffAA14F0),
                               fontSize: 19,

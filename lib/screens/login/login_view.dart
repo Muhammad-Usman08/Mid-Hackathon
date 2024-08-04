@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/component/buttons/mybutton.dart';
 import 'package:myapp/component/loginfield/loginfield.dart';
+import 'package:myapp/screens/home/home.dart';
 import 'package:myapp/screens/signUp/signup_view.dart';
 
 // ignore: must_be_immutable
@@ -10,6 +12,25 @@ class LoginScreen extends StatelessWidget {
   //controllers
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  login(context) async {
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text, password: passwordController.text);
+      print(credential);
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +58,11 @@ class LoginScreen extends StatelessWidget {
               Center(
                 child: Container(
                     margin: const EdgeInsets.only(top: 15, bottom: 15),
-                    child: const MyButton(
-                      buttonText: 'Create Account',
+                    child: MyButton(
+                      buttonText: 'Log In',
+                      onpressed: () {
+                        login(context);
+                      },
                       value: 10,
                     )),
               ),

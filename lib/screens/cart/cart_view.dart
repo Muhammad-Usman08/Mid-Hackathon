@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/component/buttons/mybutton.dart';
 import 'package:myapp/list.dart';
 import 'package:myapp/screens/cart/widget/charges.dart';
+import 'package:myapp/screens/checkout/checkout_view.dart';
 import 'package:myapp/screens/home/widget/heading.dart';
 
 class CartScreen extends StatefulWidget {
@@ -54,6 +56,34 @@ class _CartScreenState extends State<CartScreen> {
         selectedItems.removeAt(index);
       }
     });
+  }
+
+  //add data to database
+  //add items to firestore database
+  addItemsToDatabase(total) {
+    CollectionReference itemsCollection =
+        FirebaseFirestore.instance.collection('items');
+
+    List allItems = [];
+
+    for (var item in selectedItems) {
+      allItems.add({
+        'itemName': item['productName'],
+        'quantity': item['quantity'],
+        'total': item['productPrice'] * item['quantity'],
+      });
+    }
+
+    itemsCollection
+        .add({
+          'items': allItems,
+          'total': total,
+        })
+        .then((value) => Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const CheckOutScreen())))
+        .catchError((error) {
+          print(error);
+        });
   }
 
   @override
@@ -229,8 +259,14 @@ class _CartScreenState extends State<CartScreen> {
             ),
             Container(
               margin: const EdgeInsets.only(top: 25),
-              child: const Center(
-                  child: MyButton(buttonText: 'Checkout', value: 15)),
+              child: Center(
+                  child: MyButton(
+                buttonText: 'Checkout',
+                value: 15,
+                onpressed: () {
+                  addItemsToDatabase(total);
+                },
+              )),
             ),
           ],
         ),

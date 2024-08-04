@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myapp/screens/cart/cart_view.dart';
 import 'package:myapp/screens/home/home_view.dart';
 import 'package:myapp/screens/popular/popular_product.dart';
+import 'package:myapp/screens/profile/profile.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,6 +15,7 @@ List screens = [
   const HomeView(),
   const PopularProduct(),
   const CartScreen(),
+  const ProfileScreen()
 ];
 
 var selectedIndex = 0;
