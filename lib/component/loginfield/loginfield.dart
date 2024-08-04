@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 class LoginField extends StatelessWidget {
   final String title;
   final String fieldName;
-  const LoginField({super.key, required this.title, required this.fieldName});
+  final TextEditingController? controller;
+  const LoginField(
+      {super.key,
+      required this.title,
+      required this.fieldName,
+      this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +25,7 @@ class LoginField extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(bottom: 20),
           child: TextField(
+            controller: controller,
             decoration: InputDecoration(
               hintText: fieldName,
               border: const OutlineInputBorder(
@@ -27,15 +33,14 @@ class LoginField extends StatelessWidget {
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   color: Colors.grey,
                 ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(
-                  color: Color(
-                      0xff8e8e8e), // Set your desired border color when focused here
+                borderSide: const BorderSide(
+                  color: Color(0xff8e8e8e),
                 ),
               ),
               contentPadding: const EdgeInsets.all(17.0),

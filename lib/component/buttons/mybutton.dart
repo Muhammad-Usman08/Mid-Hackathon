@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
   final String buttonText;
+  final double value;
   final void Function()? onpressed;
-  const MyButton({super.key, required this.buttonText, this.onpressed});
+  const MyButton(
+      {super.key,
+      required this.buttonText,
+      this.onpressed,
+      required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +18,10 @@ class MyButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onpressed,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Color(0xffAA14F0)),
+          backgroundColor: MaterialStateProperty.all(const Color(0xffAA14F0)),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(value),
             ),
           ),
         ),
