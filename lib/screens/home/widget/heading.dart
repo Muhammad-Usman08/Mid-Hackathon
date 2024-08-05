@@ -8,7 +8,7 @@ class Heading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+      style:const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
     );
   }
 }

@@ -37,55 +37,59 @@ class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 40),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 35),
-                child: Image.asset('assets/logo/logo.png'),
-              ),
-              const LoginField(title: 'Full Name', fieldName: 'Enter Name'),
-              LoginField(
-                title: 'Email',
-                fieldName: 'Enter email',
-                controller: emailController,
-              ),
-              LoginField(
-                title: 'Password',
-                fieldName: 'Enter password',
-                controller: passwordController,
-              ),
-              Center(
-                child: Container(
-                    margin: const EdgeInsets.only(top: 15, bottom: 15),
-                    child: MyButton(
-                      buttonText: 'Create Account',
-                      value: 10,
-                      onpressed: () {
-                        signUp(context);
-                      },
-                    )),
-              ),
-              Center(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginScreen(),
-                        ));
-                  },
-                  child: const Text(
-                    'Already have a account Login in',
-                    style: TextStyle(fontWeight: FontWeight.w600),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 40),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 35),
+                  child: const Image(
+                    image: AssetImage('assets/logo/logo.png'),
                   ),
                 ),
-              )
-            ],
+                const LoginField(title: 'Full Name', fieldName: 'Enter Name'),
+                LoginField(
+                  title: 'Email',
+                  fieldName: 'Enter email',
+                  controller: emailController,
+                ),
+                LoginField(
+                  title: 'Password',
+                  fieldName: 'Enter password',
+                  controller: passwordController,
+                ),
+                Center(
+                  child: Container(
+                      margin: const EdgeInsets.only(top: 15, bottom: 15),
+                      child: MyButton(
+                        buttonText: 'Create Account',
+                        value: 10,
+                        onpressed: () {
+                          signUp(context);
+                        },
+                      )),
+                ),
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
+                          ));
+                    },
+                    child: const Text(
+                      'Already have a account Login in',
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

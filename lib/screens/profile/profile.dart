@@ -27,7 +27,10 @@ class ProfileScreen extends StatelessWidget {
                     margin: const EdgeInsets.only(right: 20, left: 16),
                     child: const CircleAvatar(
                       radius: 30,
-                      backgroundImage: AssetImage('assets/images/logo.jpeg'),
+                      child: Icon(
+                        Icons.person,
+                        size: 40,
+                      ),
                     ),
                   ),
                   Column(

@@ -33,6 +33,7 @@ class _HomeViewState extends State<HomeView> {
         }
       });
     }
+    print(Faviourite);
   }
 
   @override
@@ -70,16 +71,20 @@ class _HomeViewState extends State<HomeView> {
               leading: const Icon(Icons.favorite),
               title: const Text('Favourite'),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PopularProduct()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PopularProduct()));
               },
             ),
             ListTile(
               leading: const Icon(Icons.shopping_cart),
               title: const Text('Cart'),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CartScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CartScreen()));
               },
             ),
           ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/list.dart';
+import 'package:myapp/list.dart'; // Ensure this file exists and is correctly importing the list
 
 class PopularProduct extends StatefulWidget {
   const PopularProduct({super.key});
@@ -9,108 +9,102 @@ class PopularProduct extends StatefulWidget {
 }
 
 class _PopularProductState extends State<PopularProduct> {
+  deleteFav(index) {
+    Faviourite[index]['isFav'] == false;
+    Faviourite.removeAt(index);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffeeeeee),
       appBar: AppBar(
+        backgroundColor: const Color(0xffeeeeee),
         title: const Center(
-          child: Text('Faviourite'),
+          child: Text('Favourite'),
         ),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.trolley),
+            icon: const Icon(Icons.shopping_cart),
           )
         ],
       ),
       body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 15,
-              crossAxisSpacing: 15,
-              childAspectRatio: MediaQuery.sizeOf(context).aspectRatio * 1.2,
-            ),
-            itemCount: Faviourite.isEmpty ? 1 : Faviourite.length,
-            itemBuilder: (context, index) {
-              if (Faviourite.isEmpty) {
-                return Container(
-                  child: const Center(
-                    child: Text('no Faviourite Items'),
-                  ),
-                );
-              } else {
-                return Container(
-                  width: 180,
-                  height: 320,
-                  margin: const EdgeInsets.only(right: 15),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        child: ListView.builder(
+          itemCount: Faviourite.isEmpty ? 1 : Faviourite.length,
+          itemBuilder: (context, index) {
+            if (Faviourite.isEmpty) {
+              return const Center(child: Text('No products available'));
+            } else {
+              return Container(
+                decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(13),
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                            topRight: Radius.circular(12),
-                            bottomLeft: Radius.circular(12),
-                            bottomRight: Radius.circular(12),
+                    color: Colors.white),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.19,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.grey[200],
                           ),
-                          child: SizedBox(
-                            height: 120,
-                            width: double.infinity,
-                            child: Image.asset(
-                              '${Faviourite[index]['productImage']}',
-                              fit: BoxFit.cover,
-                            ),
+                          child: Image.asset(
+                            Faviourite[index]['productImage'],
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 13, top: 5),
-                        child: Text(
-                          '${Faviourite[index]['productName']}',
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 9),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber[700],
+                        Expanded(
+                          child: Container(
+                            margin: const EdgeInsets.only(left: 15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(bottom: 10),
+                                  child: Text(
+                                    Faviourite[index]['productName'],
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15),
+                                  ),
+                                ),
+                                Text(
+                                  'Rs.${Faviourite[index]['productPrice']}',
+                                  style: const TextStyle(
+                                      fontSize: 18, color: Colors.amber),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 4),
-                            Text(
-                              '1715 (review)',
-                              style: TextStyle(color: Colors.grey[800]),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 13, vertical: 10),
-                        child: Text(
-                          ' Rs.${Faviourite[index]['productPrice']}',
-                          style: const TextStyle(
-                              color: Color(0xffAA14F0),
-                              fontSize: 19,
-                              fontWeight: FontWeight.w600),
+                        IconButton(
+                          onPressed: () {
+                            deleteFav(index);
+                          },
+                          icon: Icon(
+                            Icons.favorite,
+                            color: products[index]['isFav'] == true
+                                ? Colors.red
+                                : Colors.grey,
+                          ),
                         ),
-                      )
-                    ],
-                  ),
-                );
-              }
-            }),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }
+          },
+        ),
       ),
     );
   }
